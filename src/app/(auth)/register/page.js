@@ -14,7 +14,10 @@ const Page = () => {
         redirectIfAuthenticated: '/dashboard',
     })
 
-    const [name, setName] = useState('')
+    const [firstName, setfirstName] = useState('')
+    const [middleName, setMiddleName] = useState('')
+    const [lastName, setlastName] = useState('')
+    const [suffix, setSuffix] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [passwordConfirmation, setPasswordConfirmation] = useState('')
