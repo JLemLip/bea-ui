@@ -27,7 +27,10 @@ const Page = () => {
         event.preventDefault()
 
         register({
-            name,
+            firstName,
+            middleName,
+            lastName,
+            suffix,
             email,
             password,
             password_confirmation: passwordConfirmation,
@@ -39,14 +42,43 @@ const Page = () => {
         <form onSubmit={submitForm}>
             {/* Name */}
             <div>
-                <Label htmlFor="name">Name</Label>
+                <Label htmlFor="firstName">First name</Label>
 
                 <Input
-                    id="name"
+                    id="firstName"
                     type="text"
-                    value={name}
+                    value={firstName}
                     className="block mt-1 w-full"
-                    onChange={event => setName(event.target.value)}
+                    onChange={event => setfirstName(event.target.value)}
+                    required
+                    autoFocus
+                />
+
+                <InputError messages={errors.name} className="mt-2" />
+            </div>
+            <div className="mt-4">
+                <Label htmlFor="middleName">Middle name</Label>
+
+                <Input
+                    id="middleName"
+                    type="text"
+                    value={middleName}
+                    className="block mt-1 w-full"
+                    onChange={event => setMiddleName(event.target.value)}
+                    autoFocus
+                />
+
+                <InputError messages={errors.name} className="mt-2" />
+            </div>
+            <div className="mt-4">
+                <Label htmlFor="lastName">Last name</Label>
+
+                <Input
+                    id="lastName"
+                    type="text"
+                    value={lastName}
+                    className="block mt-1 w-full"
+                    onChange={event => setlastName(event.target.value)}
                     required
                     autoFocus
                 />
@@ -54,6 +86,20 @@ const Page = () => {
                 <InputError messages={errors.name} className="mt-2" />
             </div>
 
+            <div className="mt-4">
+                <Label htmlFor="suffix">Suffix</Label>
+
+                <Input
+                    id="suffix"
+                    type="text"
+                    value={suffix}
+                    className="block mt-1 w-full"
+                    onChange={event => setSuffix(event.target.value)}
+                    autoFocus
+                />
+
+                <InputError messages={errors.name} className="mt-2" />
+            </div>
             {/* Email Address */}
             <div className="mt-4">
                 <Label htmlFor="email">Email</Label>

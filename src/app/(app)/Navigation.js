@@ -45,7 +45,7 @@ const Navigation = ({ user }) => {
                             width="48"
                             trigger={
                                 <button className="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 focus:outline-none transition duration-150 ease-in-out">
-                                    <div>{user?.name}</div>
+                                    <div>Hi! {user?.firstName}</div>
 
                                     <div className="ml-1">
                                         <svg
@@ -133,7 +133,7 @@ const Navigation = ({ user }) => {
 
                             <div className="ml-3">
                                 <div className="font-medium text-base text-gray-800">
-                                    {user?.name}
+                                    Hi! {user?.firstName}
                                 </div>
                                 <div className="font-medium text-sm text-gray-500">
                                     {user?.email}
