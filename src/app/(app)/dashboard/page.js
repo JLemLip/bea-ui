@@ -1,4 +1,6 @@
 import Header from '@/app/(app)/Header'
+import BranchRatingsPie from '@/components/charts/BranchRatingsPie'
+import AreaLineGraph from '@/components/charts/AreaLineGraph'
 
 export const metadata = {
     title: 'BEA - Dashboard',
@@ -17,13 +19,10 @@ const Dashboard = () => {
                             to select different year and trime. if exec then
                             show department score, if super admin show overall
                         </div>
-                    </div>
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="p-6 bg-white border-b border-gray-200">
-                            Year Selection and Chart Dashboard Header IF BM then
-                            show branch ratings for current trime, with option
-                            to select different year and trime. if exec then
-                            show department score, if super admin show overall
+
+                        <div className="p-6">
+                            <BranchRatingsPie />
+                            <AreaLineGraph />
                         </div>
                     </div>
                 </div>
