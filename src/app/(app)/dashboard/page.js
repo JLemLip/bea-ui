@@ -1,8 +1,5 @@
 import Header from '@/app/(app)/Header'
-import BranchRatingsPie from '@/components/charts/BranchRatingsPie'
-import AreaLineGraph from '@/components/charts/AreaLineGraph'
 import BarGraph from '@/components/charts/BarGraph'
-import RadarGraph from '@/components/charts/RadarGraph'
 
 export const metadata = {
     title: 'BEA - Dashboard',
@@ -23,10 +20,7 @@ const Dashboard = () => {
                         </div>
 
                         <div className="p-6">
-                            <BranchRatingsPie />
                             <BarGraph />
-                            <AreaLineGraph />
-                            <RadarGraph />
                         </div>
                     </div>
                 </div>

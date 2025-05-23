@@ -1,6 +1,8 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
+
 import {
     BarChart,
     Bar,
@@ -13,52 +15,63 @@ import {
     ResponsiveContainer,
 } from 'recharts'
 
-const data = [
-    {
-        name: 'Page A',
-        uv: 4000,
-        pv: 2400,
-        amt: 2400,
-    },
-    {
-        name: 'Page B',
-        uv: 3000,
-        pv: 1398,
-        amt: 2210,
-    },
-    {
-        name: 'Page C',
-        uv: 2000,
-        pv: 9800,
-        amt: 2290,
-    },
-    {
-        name: 'Page D',
-        uv: 2780,
-        pv: 3908,
-        amt: 2000,
-    },
-    {
-        name: 'Page E',
-        uv: 1890,
-        pv: 4800,
-        amt: 2181,
-    },
-    {
-        name: 'Page F',
-        uv: 2390,
-        pv: 3800,
-        amt: 2500,
-    },
-    {
-        name: 'Page G',
-        uv: 3490,
-        pv: 4300,
-        amt: 2100,
-    },
-]
+// const data = [
+//     {
+//         name: 'Baesa',
+//         first: 87.5,
+//         second: 88,
+//         third: 88.25,
+//     },
+//     {
+//         name: 'Balagtas',
+//         first: 85.25,
+//         second: 85.25,
+//         third: 85.25,
+//     },
+//     {
+//         name: 'Binan',
+//         first: 90.5,
+//         second: 90.5,
+//         third: 90.5,
+//     },
+// ]
 
 const BarGraph = () => {
+    const [data, setData] = useState([])
+    const [min, setMin] = useState(0)
+    const [max, setMax] = useState(100)
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const currentYear = new Date().getFullYear()
+                const user_id = 1462
+
+                const res = await axios.get(
+                    `http://localhost:8000/api/dashboard/${currentYear}/${user_id}`,
+                )
+                const apiData = res.data
+                console.log(apiData)
+
+                // Optional: shape or transform data if needed
+                setData(apiData)
+
+                // Compute dynamic min and max for Y axis
+                const flat = apiData.flatMap(item => [
+                    item.first,
+                    item.second,
+                    item.third,
+                ])
+                setMin(Math.floor(Math.min(...flat)) - 5)
+                setMax(Math.ceil(Math.max(...flat)) + 5)
+            } catch (err) {
+                console.error('Failed to load chart data:', err)
+            }
+        }
+
+        fetchData()
+    }, [])
+
     return (
         <div style={{ width: '100%', height: 400 }}>
             <ResponsiveContainer width="100%" height="100%">
@@ -74,18 +87,34 @@ const BarGraph = () => {
                     }}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
+                    <YAxis domain={[min, max]} />
+                    <Tooltip
+                        formatter={(value, name) => [
+                            `${value.toFixed(2)} pts`,
+                            `${name} trime`,
+                        ]}
+                        labelFormatter={label => `Branch: ${label}`}
+                    />
+                    <Legend
+                        layout="horizontal"
+                        verticalAlign="top"
+                        align="center"
+                        wrapperStyle={{ paddingBottom: 10 }}
+                    />
                     <Bar
-                        dataKey="pv"
+                        dataKey="first"
                         fill="#8884d8"
                         activeBar={<Rectangle fill="pink" stroke="blue" />}
                     />
                     <Bar
-                        dataKey="uv"
+                        dataKey="second"
                         fill="#82ca9d"
                         activeBar={<Rectangle fill="gold" stroke="purple" />}
+                    />
+                    <Bar
+                        dataKey="third"
+                        fill="#393E46"
+                        activeBar={<Rectangle fill="beige" stroke="purple" />}
                     />
                 </BarChart>
             </ResponsiveContainer>
