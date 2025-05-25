@@ -1,5 +1,5 @@
 import Header from '@/app/(app)/Header'
-import BarGraph from '@/components/charts/BarGraph'
+import DashboardCharting from './components/DashboardCharting'
 
 export const metadata = {
     title: 'BEA - Dashboard',
@@ -20,7 +20,7 @@ const Dashboard = () => {
                         </div>
 
                         <div className="p-6">
-                            <BarGraph />
+                            <DashboardCharting />
                         </div>
                     </div>
                 </div>

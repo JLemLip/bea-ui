@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
 
 import {
     BarChart,
@@ -15,62 +14,21 @@ import {
     ResponsiveContainer,
 } from 'recharts'
 
-// const data = [
-//     {
-//         name: 'Baesa',
-//         first: 87.5,
-//         second: 88,
-//         third: 88.25,
-//     },
-//     {
-//         name: 'Balagtas',
-//         first: 85.25,
-//         second: 85.25,
-//         third: 85.25,
-//     },
-//     {
-//         name: 'Binan',
-//         first: 90.5,
-//         second: 90.5,
-//         third: 90.5,
-//     },
-// ]
-
-const BarGraph = () => {
-    const [data, setData] = useState([])
+const BarGraph = ({ data }) => {
     const [min, setMin] = useState(0)
     const [max, setMax] = useState(100)
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const currentYear = new Date().getFullYear()
-                const user_id = 1462
+        const flat =
+            data?.flatMap(item =>
+                [item?.first, item?.second, item?.third].filter(
+                    val => typeof val === 'number',
+                ),
+            ) ?? []
 
-                const res = await axios.get(
-                    `http://localhost:8000/api/dashboard/${currentYear}/${user_id}`,
-                )
-                const apiData = res.data
-                console.log(apiData)
-
-                // Optional: shape or transform data if needed
-                setData(apiData)
-
-                // Compute dynamic min and max for Y axis
-                const flat = apiData.flatMap(item => [
-                    item.first,
-                    item.second,
-                    item.third,
-                ])
-                setMin(Math.floor(Math.min(...flat)) - 5)
-                setMax(Math.ceil(Math.max(...flat)) + 5)
-            } catch (err) {
-                console.error('Failed to load chart data:', err)
-            }
-        }
-
-        fetchData()
-    }, [])
+        setMin(Math.floor(Math.min(...flat)) - 5)
+        setMax(Math.ceil(Math.max(...flat)) + 5)
+    }, [data])
 
     return (
         <div style={{ width: '100%', height: 400 }}>
@@ -86,11 +44,11 @@ const BarGraph = () => {
                         bottom: 5,
                     }}>
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
+                    <XAxis dataKey="branchName" />
                     <YAxis domain={[min, max]} />
                     <Tooltip
                         formatter={(value, name) => [
-                            `${value.toFixed(2)} pts`,
+                            `${parseFloat(value).toFixed(2)} pts`,
                             `${name} trime`,
                         ]}
                         labelFormatter={label => `Branch: ${label}`}
@@ -104,17 +62,17 @@ const BarGraph = () => {
                     <Bar
                         dataKey="first"
                         fill="#8884d8"
-                        activeBar={<Rectangle fill="pink" stroke="blue" />}
+                        activeBar={<Rectangle fill="#8884d8" stroke="blue" />}
                     />
                     <Bar
                         dataKey="second"
                         fill="#82ca9d"
-                        activeBar={<Rectangle fill="gold" stroke="purple" />}
+                        activeBar={<Rectangle fill="#82ca9d" stroke="blue" />}
                     />
                     <Bar
                         dataKey="third"
                         fill="#393E46"
-                        activeBar={<Rectangle fill="beige" stroke="purple" />}
+                        activeBar={<Rectangle fill="#393E46" stroke="blue" />}
                     />
                 </BarChart>
             </ResponsiveContainer>
