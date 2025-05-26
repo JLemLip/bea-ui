@@ -1,22 +1,12 @@
 export const Tab = [
     {
-        id: 1,
-        label: 'Trime 1',
+        id: 0,
+        label: 'Analysis',
         active: true,
     },
     {
-        id: 2,
-        label: 'Trime 2',
-        active: false,
-    },
-    {
-        id: 3,
-        label: 'Trime 3',
-        active: false,
-    },
-    {
-        id: 4,
-        label: 'Trime 4',
+        id: 1,
+        label: 'Profiling',
         active: false,
     },
 ]

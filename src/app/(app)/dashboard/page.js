@@ -1,30 +1,32 @@
-import Header from '@/app/(app)/Header'
-import BranchRatingsPie from '@/components/charts/BranchRatingsPie'
-import AreaLineGraph from '@/components/charts/AreaLineGraph'
+'use client'
 
-export const metadata = {
-    title: 'BEA - Dashboard',
-}
+// import Header from '@/app/(app)/Header'
+import Graphs from '@/app/(part)/Graphs'
+import Profiling from '@/app/(part)/Profiling'
+import TabOptions from '@/components/TabOptions'
+import { Tab } from '@/constants/committee'
+import { useState } from 'react'
+
+// export const metadata = {
+//     title: 'BEA - Dashboard',
+// }
 
 const Dashboard = () => {
+    const [toogleGraph, setGraph] = useState(0)
+    const [option, setOption] = useState(Tab)
+
     return (
         <>
-            <Header title="Dashboard" />
-            <div className="py-12">
+            {/* <Header title="Dashboard" /> */}
+            <div className="py-4">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="p-6 bg-white border-b border-gray-200">
-                            Year Selection and Chart Dashboard Header IF BM then
-                            show branch ratings for current trime, with option
-                            to select different year and trime. if exec then
-                            show department score, if super admin show overall
-                        </div>
-
-                        <div className="p-6">
-                            <BranchRatingsPie />
-                            <AreaLineGraph />
-                        </div>
-                    </div>
+                    <TabOptions
+                        option={option}
+                        setOption={setOption}
+                        setGraph={setGraph}
+                    />
+                    <Graphs active={toogleGraph} />
+                    <Profiling active={toogleGraph} />
                 </div>
             </div>
         </>
