@@ -1,5 +1,4 @@
-// import BranchRatingsPie from '@/components/charts/BranchRatingsPie'
-// import AreaLineGraph from '@/components/charts/AreaLineGraph'
+import DashboardCharting from '../(app)/dashboard/components/DashboardCharting'
 
 const Graphs = ({ active }) => {
     if (active == 0) {
@@ -13,8 +12,7 @@ const Graphs = ({ active }) => {
                 </div>
 
                 <div className="p-6">
-                    {/* <BranchRatingsPie />
-                                <AreaLineGraph /> */}
+                    <DashboardCharting />
                 </div>
             </div>
         )
