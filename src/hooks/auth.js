@@ -15,7 +15,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         axios
             .get('/api/user')
             .then(res => {
-                console.log('User:', res.data)
+                console.log(res.data)
                 return res.data
             })
             .catch(error => {

@@ -1,14 +1,19 @@
 'use client'
 
-import Loading from '@/app/(app)/Loading'
+import GraphLoading from '@/components/charts/GraphLoading'
 import Input from '@/components/Input'
 import BarGraph from '@/components/charts/BarGraph'
 import InputError from '@/components/InputError'
 import Label from '@/components/Label'
-import useSWR from 'swr'
-import axios from '@/lib/axios'
 import { useState } from 'react'
+import { useLibraries } from '@/stores/dashboard'
 import { useAuth } from '@/hooks/auth'
+import AreaLine from '@/components/charts/AreaLineGraph'
+import BranchRatingsPie from '@/components/charts/BranchRatingsPie'
+import DotLine from '@/components/charts/DotLineGraph'
+import RadarGraph from '@/components/charts/RadarGraph'
+import TwoLevelPie from '@/components/charts/TwoLevelPieChart'
+import ActivePie from '@/components/charts/ActivePieChart'
 
 const SuperAdmin = () => {
     const { user } = useAuth({ middleware: 'auth' })
@@ -17,18 +22,31 @@ const SuperAdmin = () => {
     const [trime, setTrime] = useState('')
     const [errors, setErrors] = useState(null)
 
-    const { data: chartData } = useSWR(
-        user?.id ? [`/api/dashboard`, user.id, year, trime] : null,
-        () =>
-            axios
-                .get(
-                    `/api/dashboard?user_id=${user.id}&year=${year}&trime=${trime}`,
-                )
-                .then(res => res.data)
-                .catch(error => {
-                    setErrors(error.response?.data?.errors)
-                }),
-    )
+    const data = {
+        year,
+        trime,
+    }
+
+    const { chartData, viewBranch } = useLibraries({
+        data,
+        middleware: 'auth',
+        redirectLinks: '/dashboard/view-branch',
+    })
+
+    if (!chartData) {
+        return <GraphLoading />
+    }
+
+    const handleViewBranch = async () => {
+        setErrors(null)
+
+        viewBranch({
+            year,
+            trime,
+            setErrors,
+        })
+    }
+
     return (
         <>
             <div className="p-6">
@@ -48,7 +66,7 @@ const SuperAdmin = () => {
                     </div>
 
                     <div className="flex-1">
-                        <Label htmlFor="trime">Trimester</Label>
+                        <Label htmlFor="trime">Trime</Label>
                         <Input
                             id="trime"
                             type="text"
@@ -61,18 +79,20 @@ const SuperAdmin = () => {
                         <InputError messages={errors?.trime} className="mt-2" />
                     </div>
                 </div>
-
-                {!chartData && <Loading />}
+                <BarGraph data={chartData} />
 
                 {user.userAccessLevel === '1' && !errors && (
-                    <BarGraph data={chartData} />
+                    <BarGraph data={chartData} action={handleViewBranch} />
                 )}
-                {user.userAccessLevel === '2' && !errors && (
-                    <BarGraph data={chartData} />
-                )}
+                {user.userAccessLevel === '2' && !errors && <AreaLine />}
                 {user.userAccessLevel === '3' && !errors && (
-                    <BarGraph data={chartData} />
+                    <BranchRatingsPie />
                 )}
+                <AreaLine />
+                <DotLine />
+                <RadarGraph />
+                <TwoLevelPie />
+                <ActivePie />
             </div>
         </>
     )

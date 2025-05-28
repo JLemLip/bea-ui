@@ -12,39 +12,34 @@ import {
 
 const data = [
     {
-        subject: 'Math',
+        subject: 'Productivity',
         A: 120,
         B: 110,
         fullMark: 150,
     },
     {
-        subject: 'Chinese',
+        subject: 'Teamwork',
         A: 98,
-        B: 130,
         fullMark: 150,
     },
     {
-        subject: 'English',
+        subject: 'Creativity',
         A: 86,
-        B: 130,
         fullMark: 150,
     },
     {
-        subject: 'Geography',
+        subject: 'Punctuality',
         A: 99,
-        B: 100,
         fullMark: 150,
     },
     {
-        subject: 'Physics',
+        subject: 'Problem Solving',
         A: 85,
-        B: 90,
         fullMark: 150,
     },
     {
-        subject: 'History',
+        subject: 'Communication',
         A: 65,
-        B: 85,
         fullMark: 150,
     },
 ]
@@ -64,13 +59,7 @@ const RadarGraph = () => {
                         fill="#8884d8"
                         fillOpacity={0.6}
                     />
-                    <Radar
-                        name="Lily"
-                        dataKey="B"
-                        stroke="#82ca9d"
-                        fill="#82ca9d"
-                        fillOpacity={0.6}
-                    />
+
                     <Legend />
                 </RadarChart>
             </ResponsiveContainer>
