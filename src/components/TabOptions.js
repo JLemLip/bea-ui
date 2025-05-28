@@ -1,28 +1,33 @@
-const TabOptions = ({ option = [], setOption }) => {
+const TabOptions = ({ option = [], setOption, setGraph }) => {
     const changeActive = id => {
         setOption(
-            option.map(obj => {
-                if (obj.id === id) {
-                    return { ...obj, active: true }
-                } else {
-                    return { ...obj, active: false }
-                }
+            option.map(opt => {
+                if (opt.id === id) return { ...opt, active: true }
+                else return { ...opt, active: false }
             }),
         )
+        setGraph(id)
     }
 
-    const choices = option.forEach(obj => {
+    const choices = option.map(obj => {
         const selected = obj.active
-            ? 'px-4 py-2 border-b-2 border-blue-500 text-blue-600 font-semibold'
-            : 'px-4 py-2 text-gray-500 hover:text-blue-500'
+            ? 'px-4 py-2 cursor-pointer border-b-2 border-blue-500 text-black font-semibold'
+            : 'px-4 py-2 cursor-pointer text-gray-500 hover:text-blue-500'
         return (
-            <button className={selected} onClick={changeActive(obj.id)}>
+            <button
+                key={obj.id}
+                className={selected}
+                onClick={() => changeActive(obj.id)}>
                 {obj.label}
             </button>
         )
     })
 
-    return <div className="flex space-x-2 border-b">{choices}</div>
+    return (
+        <div className="flex justify-center items-center">
+            <div className="flex space-x-2 border-b">{choices}</div>
+        </div>
+    )
 }
 
 export default TabOptions
