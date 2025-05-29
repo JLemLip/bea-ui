@@ -79,20 +79,27 @@ const SuperAdmin = () => {
                         <InputError messages={errors?.trime} className="mt-2" />
                     </div>
                 </div>
-                <BarGraph data={chartData} />
 
                 {user.userAccessLevel === '1' && !errors && (
                     <BarGraph data={chartData} action={handleViewBranch} />
                 )}
                 {user.userAccessLevel === '2' && !errors && <AreaLine />}
                 {user.userAccessLevel === '3' && !errors && (
-                    <BranchRatingsPie />
+                    <div className="flex-1">
+                        <div className="flex-1">
+                            <ActivePie data={chartData} />
+                        </div>
+                        <div className="flex-1">
+                            <DotLine />
+                        </div>
+                    </div>
                 )}
                 <AreaLine />
                 <DotLine />
                 <RadarGraph />
                 <TwoLevelPie />
                 <ActivePie />
+                <BranchRatingsPie />
             </div>
         </>
     )
