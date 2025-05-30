@@ -99,7 +99,13 @@ const ActivePie = () => {
     }
 
     return (
-        <div style={{ width: '100%', height: 400 }}>
+        <div
+            style={{
+                width: '100%',
+                height: 400,
+                overflow: 'visible',
+                zIndex: 9999,
+            }}>
             <ResponsiveContainer width="100%" height="100%">
                 <PieChart width={400} height={400}>
                     <Pie
