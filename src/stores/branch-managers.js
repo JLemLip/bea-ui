@@ -4,17 +4,17 @@ import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/hooks/auth'
 
-export const useLibraries = ({ data, middleware, redirectLinks } = {}) => {
+export const useBranchManagers = ({ data, redirectLinks } = {}) => {
     const router = useRouter()
     const { user } = useAuth({ middleware: 'auth' })
 
     const {
-        data: chartData,
+        data: chart_data,
         error,
         mutate,
     } = useSWR('/api/dashboard', () =>
         axios
-            .get(`/api/dashboard?user_id=${user.id}&year=${data.year}`)
+            .get(`/api/dashboard/branch-manager/${data.year}/${user.id}`)
             .then(res => res.data)
             .catch(e => {
                 throw e
@@ -23,14 +23,14 @@ export const useLibraries = ({ data, middleware, redirectLinks } = {}) => {
 
     const csrf = () => axios.get('/sanctum/csrf-cookie')
 
-    const viewBranch = async ({ setErrors, setStatus, ...props }) => {
+    const viewCommitteeNotes = async ({ setErrors, ...props }) => {
         await csrf()
 
         setErrors([])
         setStatus(null)
 
         axios
-            .post('/view-branch', props)
+            .get('/view-branch', props)
             .then(() => mutate())
             .catch(e => {
                 throw e
@@ -39,10 +39,10 @@ export const useLibraries = ({ data, middleware, redirectLinks } = {}) => {
 
     useEffect(() => {
         // view branch
-        if (middleware === 'admin' && redirectLinks) router.push(redirectLinks)
-    }, [data, chartData, error])
+        if (redirectLinks == 'view-category') router.push(redirectLinks)
+    }, [data, chart_data, error])
     return {
-        chartData,
-        viewBranch,
+        chart_data,
+        viewCommitteeNotes,
     }
 }

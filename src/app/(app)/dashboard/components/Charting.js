@@ -6,7 +6,6 @@ import BarGraph from '@/components/charts/BarGraph'
 import InputError from '@/components/InputError'
 import Label from '@/components/Label'
 import { useState } from 'react'
-import { useLibraries } from '@/stores/dashboard'
 import { useAuth } from '@/hooks/auth'
 import AreaLine from '@/components/charts/AreaLineGraph'
 import BranchRatingsPie from '@/components/charts/BranchRatingsPie'
@@ -14,6 +13,7 @@ import DotLine from '@/components/charts/DotLineGraph'
 import RadarGraph from '@/components/charts/RadarGraph'
 import TwoLevelPie from '@/components/charts/TwoLevelPieChart'
 import ActivePie from '@/components/charts/ActivePieChart'
+import { useBranchManagers } from '@/stores/branch-managers'
 
 const SuperAdmin = () => {
     const { user } = useAuth({ middleware: 'auth' })
@@ -27,9 +27,9 @@ const SuperAdmin = () => {
         trime,
     }
 
-    const { chartData, viewBranch } = useLibraries({
+    const { chartData, viewBranch } = useBranchManagers({
         data,
-        middleware: 'auth',
+        role: 'auth',
         redirectLinks: '/dashboard/view-branch',
     })
 
