@@ -14,8 +14,11 @@ export const useBranchManagers = ({ data, redirectLinks } = {}) => {
         mutate,
     } = useSWR('/api/dashboard', () =>
         axios
-            .get(`/api/dashboard/branch-manager/${data.year}/${user.id}`)
-            .then(res => res.data)
+            .get(`/api/dashboard/branch-managers/${data.year}/${user.id}`)
+            .then(res => {
+                console.log(['chart', res.data])
+                return res.data
+            })
             .catch(e => {
                 throw e
             }),
@@ -27,7 +30,6 @@ export const useBranchManagers = ({ data, redirectLinks } = {}) => {
         await csrf()
 
         setErrors([])
-        setStatus(null)
 
         axios
             .get('/view-branch', props)

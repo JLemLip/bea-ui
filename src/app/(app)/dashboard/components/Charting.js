@@ -27,13 +27,12 @@ const SuperAdmin = () => {
         trime,
     }
 
-    const { chartData, viewBranch } = useBranchManagers({
+    const { chart_data, viewBranch } = useBranchManagers({
         data,
-        role: 'auth',
         redirectLinks: '/dashboard/view-branch',
     })
 
-    if (!chartData) {
+    if (!chart_data) {
         return <GraphLoading />
     }
 
@@ -81,25 +80,23 @@ const SuperAdmin = () => {
                 </div>
 
                 {user.userAccessLevel === '1' && !errors && (
-                    <BarGraph data={chartData} action={handleViewBranch} />
+                    <BarGraph data={chart_data} action={handleViewBranch} />
                 )}
                 {user.userAccessLevel === '2' && !errors && <AreaLine />}
                 {user.userAccessLevel === '3' && !errors && (
                     <div className="flex-1">
                         <div className="flex-1">
-                            <ActivePie data={chartData} />
+                            <ActivePie data={chart_data.per_category_ratings} />
                         </div>
-                        <div className="flex-1">
-                            <DotLine />
-                        </div>
+                        <div className="flex-1">{/* <DotLine /> */}</div>
                     </div>
                 )}
-                <AreaLine />
+                {/* <AreaLine />
                 <DotLine />
                 <RadarGraph />
                 <TwoLevelPie />
                 <ActivePie />
-                <BranchRatingsPie />
+                <BranchRatingsPie /> */}
             </div>
         </>
     )

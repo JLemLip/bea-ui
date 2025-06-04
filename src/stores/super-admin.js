@@ -14,8 +14,11 @@ export const useSuperAdmin = ({ data, middleware, redirectLinks } = {}) => {
         mutate,
     } = useSWR('/api/dashboard', () =>
         axios
-            .get(`/api/dashboard?user_id=${user.id}&year=${data.year}`)
-            .then(res => res.data)
+            .get(`/api/dashboard/${data.year}/${user.id}`)
+            .then(res => {
+                console.log(res.data)
+                return res.data
+            })
             .catch(e => {
                 throw e
             }),

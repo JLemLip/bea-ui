@@ -12,6 +12,8 @@ const data = [
 ]
 
 const renderActiveShape = props => {
+    const { data } = props
+    console.log(['render', data])
     const total_ratings = data.reduce((sum, item) => sum + item.value, 0)
 
     const RADIAN = Math.PI / 180
@@ -91,12 +93,17 @@ const renderActiveShape = props => {
     )
 }
 
-const ActivePie = () => {
+const ActivePie = props => {
+    const { data } = props
+    console.log(['here', data])
+
     const [activeIndex, setActiveIndex] = useState(0)
 
     const onPieEnter = (_, index) => {
         setActiveIndex(index)
     }
+
+    if (!data || !data.length) return <p>No graphs to display</p>
 
     return (
         <div
