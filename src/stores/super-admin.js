@@ -16,7 +16,6 @@ export const useSuperAdmin = ({ data, middleware, redirectLinks } = {}) => {
         axios
             .get(`/api/dashboard/${data.year}/${user.id}`)
             .then(res => {
-                console.log(res.data)
                 return res.data
             })
             .catch(e => {

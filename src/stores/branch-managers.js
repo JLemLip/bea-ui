@@ -16,7 +16,6 @@ export const useBranchManagers = ({ data, redirectLinks } = {}) => {
         axios
             .get(`/api/dashboard/branch-managers/${data.year}/${user.id}`)
             .then(res => {
-                console.log(['chart', res.data])
                 return res.data
             })
             .catch(e => {

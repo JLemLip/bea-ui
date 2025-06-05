@@ -3,19 +3,7 @@
 import React, { useState } from 'react'
 import { PieChart, Pie, Sector, ResponsiveContainer } from 'recharts'
 
-const data = [
-    { name: 'Office Management', value: 13.5, overall_rate: 15 },
-    { name: 'Park Management', value: 26.5, overall_rate: 30 },
-    { name: 'Interment Facilitation', value: 18, overall_rate: 20 },
-    { name: 'Park Development', value: 13.25, overall_rate: 15 },
-    { name: 'Warehouse Management', value: 17, overall_rate: 20 },
-]
-
 const renderActiveShape = props => {
-    const { data } = props
-    console.log(['render', data])
-    const total_ratings = data.reduce((sum, item) => sum + item.value, 0)
-
     const RADIAN = Math.PI / 180
     const {
         cx,
@@ -30,6 +18,9 @@ const renderActiveShape = props => {
         // percent,
         value,
     } = props
+
+    const total_ratings = payload.payload.total_branch_ratings
+
     const sin = Math.sin(-RADIAN * midAngle)
     const cos = Math.cos(-RADIAN * midAngle)
     const sx = cx + (outerRadius + 10) * cos
@@ -95,7 +86,6 @@ const renderActiveShape = props => {
 
 const ActivePie = props => {
     const { data } = props
-    console.log(['here', data])
 
     const [activeIndex, setActiveIndex] = useState(0)
 
@@ -103,7 +93,7 @@ const ActivePie = props => {
         setActiveIndex(index)
     }
 
-    if (!data || !data.length) return <p>No graphs to display</p>
+    if (!data || data.length == 0) return <div>No record found.</div>
 
     return (
         <div
