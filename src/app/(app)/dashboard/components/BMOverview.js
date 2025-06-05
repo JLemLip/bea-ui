@@ -18,12 +18,12 @@ const BMOverview = () => {
         trime,
     }
 
-    const { chart_data } = useBranchManagers({
+    const { overview } = useBranchManagers({
         data,
         redirectLinks: '/dashboard/view-branch',
     })
 
-    if (!chart_data) {
+    if (!overview) {
         return <GraphLoading />
     }
 
@@ -61,7 +61,7 @@ const BMOverview = () => {
                 </div>
 
                 <div className="flex-1">
-                    <ActivePie data={chart_data.per_category_ratings} />
+                    <ActivePie data={overview.per_category_ratings} />
                 </div>
             </div>
         </>

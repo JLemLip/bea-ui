@@ -9,7 +9,7 @@ export const useBranchManagers = ({ data, redirectLinks } = {}) => {
     const { user } = useAuth({ middleware: 'auth' })
 
     const {
-        data: chart_data,
+        data: overview,
         error,
         mutate,
     } = useSWR('/api/dashboard', () =>
@@ -25,7 +25,35 @@ export const useBranchManagers = ({ data, redirectLinks } = {}) => {
 
     const csrf = () => axios.get('/sanctum/csrf-cookie')
 
-    const viewCommitteeNotes = async ({ setErrors, ...props }) => {
+    const { data: comparing } = useSWR(
+        '/api/dashboard/branch-managers/compare/',
+        () =>
+            axios
+                .get(
+                    `/api/dashboard/branch-managers/compare/${data.from_year}/${data.to_year}/${user.id}`,
+                )
+                .then(res => {
+                    return res.data
+                })
+                .catch(e => {
+                    throw e
+                }),
+    )
+
+    const compareTrime = async ({ setErrors, ...props }) => {
+        await csrf()
+
+        setErrors([])
+
+        axios
+            .get('/view-branch', props)
+            .then(() => mutate())
+            .catch(e => {
+                throw e
+            })
+    }
+
+    const getComitteeNotes = async ({ setErrors, ...props }) => {
         await csrf()
 
         setErrors([])
@@ -41,9 +69,11 @@ export const useBranchManagers = ({ data, redirectLinks } = {}) => {
     useEffect(() => {
         // view branch
         if (redirectLinks == 'view-category') router.push(redirectLinks)
-    }, [data, chart_data, error])
+    }, [data, overview, comparing, error])
     return {
-        chart_data,
-        viewCommitteeNotes,
+        overview,
+        comparing,
+        compareTrime,
+        getComitteeNotes,
     }
 }

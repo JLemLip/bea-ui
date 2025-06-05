@@ -12,26 +12,26 @@ import {
     ResponsiveContainer,
 } from 'recharts'
 
-const data = [
-    {
-        name: 'First Trime',
-        current: 88,
-        previous: 90,
-        rate: 88,
-    },
-    {
-        name: 'Second Trime',
-        current: 89,
-        previous: 85,
-        rate: 89,
-    },
-    {
-        name: 'Third Trime',
-        current: 98,
-        previous: 89,
-        rate: 98,
-    },
-]
+// const data = [
+//     {
+//         name: 'First Trime',
+//         current: 88,
+//         previous: 90,
+//         rate: 88,
+//     },
+//     {
+//         name: 'Second Trime',
+//         current: 89,
+//         previous: 85,
+//         rate: 89,
+//     },
+//     {
+//         name: 'Third Trime',
+//         current: 98,
+//         previous: 89,
+//         rate: 98,
+//     },
+// ]
 
 const CustomizedDot = props => {
     // const { cx, cy, stroke, payload, value } = props
@@ -76,12 +76,13 @@ const CustomLegend = ({ payload }) => {
             }}>
             {payload.map((entry, index) => {
                 const key = entry.payload.dataKey
-                const label = key.charAt(0).toUpperCase() + key.slice(1) // ucfirst
+                // upper case first letter
+                const label = key.charAt(0).toUpperCase() + key.slice(1)
 
                 return (
                     <li key={`item-${index}`} style={{ color: entry.color }}>
                         <span style={{ marginRight: 6 }}>⬤</span>
-                        {label} Month
+                        {label} Trime
                     </li>
                 )
             })}
@@ -89,7 +90,12 @@ const CustomLegend = ({ payload }) => {
     )
 }
 
-const DotLine = () => {
+const DotLine = props => {
+    const { data } = props
+    console.log(data)
+
+    if (!data || data.length == 0) return 'No record found.'
+
     const [min, setMin] = useState(0)
     const [max, setMax] = useState(100)
 
