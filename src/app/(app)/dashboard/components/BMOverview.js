@@ -2,48 +2,29 @@
 
 import GraphLoading from '@/components/charts/GraphLoading'
 import Input from '@/components/Input'
-import BarGraph from '@/components/charts/BarGraph'
 import InputError from '@/components/InputError'
 import Label from '@/components/Label'
-import { useState } from 'react'
-import { useAuth } from '@/hooks/auth'
-import AreaLine from '@/components/charts/AreaLineGraph'
-import BranchRatingsPie from '@/components/charts/BranchRatingsPie'
-import DotLine from '@/components/charts/DotLineGraph'
-import RadarGraph from '@/components/charts/RadarGraph'
-import TwoLevelPie from '@/components/charts/TwoLevelPieChart'
 import ActivePie from '@/components/charts/ActivePieChart'
+import { useState } from 'react'
 import { useBranchManagers } from '@/stores/branch-managers'
 
-const SuperAdmin = () => {
-    const { user } = useAuth({ middleware: 'auth' })
-
+const BMOverview = () => {
     const [year, setYear] = useState(new Date().getFullYear())
     const [trime, setTrime] = useState('')
-    const [errors, setErrors] = useState(null)
+    const [errors] = useState(null)
 
     const data = {
         year,
         trime,
     }
 
-    const { chart_data, viewBranch } = useBranchManagers({
+    const { chart_data } = useBranchManagers({
         data,
         redirectLinks: '/dashboard/view-branch',
     })
 
     if (!chart_data) {
         return <GraphLoading />
-    }
-
-    const handleViewBranch = async () => {
-        setErrors(null)
-
-        viewBranch({
-            year,
-            trime,
-            setErrors,
-        })
     }
 
     return (
@@ -79,27 +60,12 @@ const SuperAdmin = () => {
                     </div>
                 </div>
 
-                {user.userAccessLevel === '1' && !errors && (
-                    <BarGraph data={chart_data} action={handleViewBranch} />
-                )}
-                {user.userAccessLevel === '2' && !errors && <AreaLine />}
-                {user.userAccessLevel === '3' && !errors && (
-                    <div className="flex-1">
-                        <div className="flex-1">
-                            <ActivePie data={chart_data.per_category_ratings} />
-                        </div>
-                        <div className="flex-1">{/* <DotLine /> */}</div>
-                    </div>
-                )}
-                {/* <AreaLine />
-                <DotLine />
-                <RadarGraph />
-                <TwoLevelPie />
-                <ActivePie />
-                <BranchRatingsPie /> */}
+                <div className="flex-1">
+                    <ActivePie data={chart_data.per_category_ratings} />
+                </div>
             </div>
         </>
     )
 }
 
-export default SuperAdmin
+export default BMOverview

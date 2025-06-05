@@ -98,8 +98,8 @@ const DotLine = () => {
         const minValue = Math.floor(Math.min(...rates)) - 5
         const maxValue = Math.ceil(Math.max(...rates)) + 5
 
-        setMin(minValue)
-        setMax(maxValue)
+        setMin(minValue < 0 ? 0 : minValue)
+        setMax(maxValue > 100 ? 100 : maxValue)
     }, [])
 
     return (
