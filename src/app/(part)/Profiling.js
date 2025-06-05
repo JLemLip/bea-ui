@@ -2,12 +2,12 @@ import useLibrary from '@/hooks/useLibrary'
 import TableContainer from '@/components/table/TableContainer'
 
 const Profiling = ({ active }) => {
-    const { branch } = useLibrary()
-    const handleView = id => {
-        console.log(id)
+    const { branch, branch_column } = useLibrary()
+    const handleView = () => {
+        // console.log(id)
     }
-    const handleSearch = val => {
-        console.log(val)
+    const handleSearch = () => {
+        // console.log(val)
     }
 
     const handleCreate = () => {
@@ -20,6 +20,7 @@ const Profiling = ({ active }) => {
                 <TableContainer
                     title="Branch Library Profiling"
                     row={branch}
+                    columns={branch_column}
                     handleAction={handleView}
                     handleSearch={handleSearch}
                     handleCreate={handleCreate}

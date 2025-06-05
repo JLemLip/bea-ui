@@ -4,6 +4,7 @@ import TableCreate from './TableCreate'
 const TableContainer = ({
     title,
     row,
+    columns,
     handleAction,
     handleSearch,
     handleCreate,
@@ -21,7 +22,11 @@ const TableContainer = ({
                 {handleSearch && <TableSearch handleSearch={handleSearch} />}
             </div>
             <div className="px-6 pb-4">
-                <TableStructure row={row} handleAction={handleAction} />
+                <TableStructure
+                    rows={row}
+                    columns={columns}
+                    handleAction={handleAction}
+                />
             </div>
         </div>
     )
