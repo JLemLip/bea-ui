@@ -1,5 +1,6 @@
+import { useState } from 'react'
 import TableButton from './TableButton'
-import TablePagination from './TablePagination'
+// import TablePagination from './TablePagination'
 
 const DataColumns = ({
     columns,
@@ -32,8 +33,8 @@ const DataColumns = ({
                     scope="col"
                     key={count}
                     className={
-                        count === 1
-                            ? index % 2 === 0
+                        count === 0
+                            ? index % 2 === 1
                                 ? 'px-6 py-4 gap-2 font-bold text-sm'
                                 : 'px-6 py-4 gap-2 font-bold text-sm'
                             : 'px-6 py-4 gap-2'
@@ -63,30 +64,41 @@ const DataBody = ({ row, handleAction }) => {
     })
 }
 
-const DataHead = ({ row }) => {
-    const keys = Object.keys(row[0])
-
+const DataHead = ({ columns }) => {
     return (
         <tr>
-            <DataColumns columns={keys} index={0} position="head" />
+            <DataColumns columns={columns} index={0} position="head" />
         </tr>
     )
 }
 
-export const TableStructure = ({ row, handleAction }) => {
+export const TableStructure = ({ rows, columns, handleAction }) => {
+    // Reformat data to retrieve only the value available in the column for the given field key
+    // Only get the first 10 data for pagination
+    const [row, setRow] = useState(
+        rows.slice(0, 10).map(row => {
+            return columns.map(column => row[column.field])
+        }),
+    )
+    const column_labels = columns.map(column => column.label)
+
     return (
         <>
             <div className="relative overflow-x-auto shadow-md sm:rounded-sm">
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50">
-                        <DataHead row={row} handleAction={handleAction} />
+                        <DataHead
+                            columns={column_labels}
+                            handleAction={handleAction}
+                        />
                     </thead>
                     <tbody className="text-gray-700">
                         <DataBody row={row} handleAction={handleAction} />
                     </tbody>
                 </table>
             </div>
-            <TablePagination />
+            {/* Need logic to get pagination links and function to manipulate table */}
+            {/* <TablePagination /> */}
         </>
     )
 }
