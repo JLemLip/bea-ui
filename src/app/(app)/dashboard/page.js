@@ -25,6 +25,7 @@ const Dashboard = () => {
                         setOption={setOption}
                         setGraph={setGraph}
                     />
+
                     <Graphs active={toogleGraph} />
                     <Profiling active={toogleGraph} />
                 </div>
