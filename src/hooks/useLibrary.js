@@ -2,6 +2,25 @@
 // import { useState } from 'react'
 
 const useLibrary = () => {
+    const branch_column = [
+        {
+            field: 'Company_Name',
+            label: 'Company_Name',
+        },
+        {
+            field: 'Branch_Code',
+            label: 'Branch Code',
+        },
+        {
+            field: 'Branch_Name',
+            label: 'Branch Name',
+        },
+        {
+            field: 'Edit',
+            label: 'Action',
+        },
+    ]
+
     const branch = [
         {
             Branch_Id: 1,
@@ -58,7 +77,7 @@ const useLibrary = () => {
     //     })
     // })
 
-    return { branch }
+    return { branch_column, branch }
 }
 
 export default useLibrary
