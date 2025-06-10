@@ -9,8 +9,11 @@ import { useBranchManagers } from '@/stores/branch-managers'
 import DotLineGraph from '@/components/charts/DotLineGraph'
 
 const BMComparing = () => {
-    const [to_year, setToYear] = useState(null)
-    const [from_year, setFromYear] = useState(null)
+    const curr_date = new Date()
+    const curr_year = curr_date.getFullYear()
+
+    const [to_year, setToYear] = useState(curr_year)
+    const [from_year, setFromYear] = useState(curr_year - 1)
     const [errors] = useState(null)
 
     const data = {
@@ -28,7 +31,7 @@ const BMComparing = () => {
     }
 
     const handleCompare = () => {
-        compareTrime({ errors, data })
+        compareTrime({ errors })
     }
 
     return (
@@ -69,7 +72,11 @@ const BMComparing = () => {
                         />
                     </div>
                     <div className="flex-1">
-                        <button onClick={handleCompare}>Sign out</button>
+                        <button
+                            onClick={handleCompare}
+                            className="px-5 py-2 mt-6 rounded-lg bg-gradient-to-r from-stone-500 to-stone-600 hover:from-slate-600 hover:to-slate-700 text-white font-semibold shadow-md transition-all duration-200 ease-in-out transform hover:scale-105 active:scale-95">
+                            Compare
+                        </button>
                     </div>
                 </div>
 

@@ -40,15 +40,18 @@ export const useBranchManagers = ({ data, redirectLinks } = {}) => {
                 }),
     )
 
-    const compareTrime = async ({ setErrors, ...props }) => {
+    const compareTrime = async ({ setErrors }) => {
         await csrf()
 
         setErrors([])
 
         axios
-            .get('/view-branch', props)
+            .get(
+                `/api/dashboard/branch-managers/compare/${data.from_year}/${data.to_year}/${user.id}`,
+            )
             .then(() => mutate())
             .catch(e => {
+                console.log(e)
                 throw e
             })
     }
