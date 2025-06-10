@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/hooks/auth'
 
-export const useLibraries = ({ data, middleware, redirectLinks } = {}) => {
+export const useSuperAdmin = ({ data, middleware, redirectLinks } = {}) => {
     const router = useRouter()
     const { user } = useAuth({ middleware: 'auth' })
 
@@ -14,8 +14,10 @@ export const useLibraries = ({ data, middleware, redirectLinks } = {}) => {
         mutate,
     } = useSWR('/api/dashboard', () =>
         axios
-            .get(`/api/dashboard?user_id=${user.id}&year=${data.year}`)
-            .then(res => res.data)
+            .get(`/api/dashboard/${data.year}/${user.id}`)
+            .then(res => {
+                return res.data
+            })
             .catch(e => {
                 throw e
             }),
