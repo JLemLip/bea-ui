@@ -14,7 +14,7 @@ const BMComparing = () => {
 
     const [to_year, setToYear] = useState(curr_year)
     const [from_year, setFromYear] = useState(curr_year - 1)
-    const [errors] = useState(null)
+    const [errors, setErrors] = useState(null)
 
     const data = {
         to_year,
@@ -31,7 +31,7 @@ const BMComparing = () => {
     }
 
     const handleCompare = () => {
-        compareTrime({ errors })
+        compareTrime({ setErrors })
     }
 
     return (

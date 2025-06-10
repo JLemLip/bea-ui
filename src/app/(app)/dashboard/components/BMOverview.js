@@ -7,16 +7,21 @@ import Label from '@/components/Label'
 import ActivePie from '@/components/charts/ActivePieChart'
 import { useState } from 'react'
 import { useBranchManagers } from '@/stores/branch-managers'
+import dateFormatter from '@/hooks/dateFormatter'
 
 const BMOverview = () => {
     const [year, setYear] = useState(new Date().getFullYear())
-    const [trime, setTrime] = useState('')
+    const [trime, setTrime] = useState(
+        dateFormatter.getCurrentTrimester().trimester,
+    )
     const [errors] = useState(null)
 
     const data = {
         year,
         trime,
     }
+
+    console.log(data)
 
     const { overview } = useBranchManagers({
         data,
