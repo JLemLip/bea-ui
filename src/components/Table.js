@@ -82,9 +82,9 @@ const Table = ({
   }
 
   return (
-    <div className={`flex flex-col rounded-lg shadow-md ${className}`}>
+    <div className={`flex flex-col rounded-lg shadow-md  ${className}`}>
       {/* Search Input */}
-      <div className="p-4 bg-white rounded-t-lg border-b border-gray-200 flex justify-end">
+      <div className="p-4 bg-white rounded-t-lg border-b border-gray-200 flex justify-end  mt-5">
         <label htmlFor="table-search" className="sr-only">Search</label>
         <div className="relative w-72">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
