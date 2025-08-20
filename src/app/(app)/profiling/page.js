@@ -5,6 +5,7 @@ import Branch from './components/Branch'
 import Department from './components/Department'
 import { HiOutlineOfficeBuilding, HiOutlineUserGroup } from 'react-icons/hi'
 import { LucidePanelLeftClose, LucidePanelLeftOpen } from 'lucide-react'
+import DepartmentView from './components/Departments/DepartmentView'
 
 const ProfilingPage = () => {
     const [activeMenu, setActiveMenu] = useState('')
@@ -26,7 +27,7 @@ const ProfilingPage = () => {
             case 'Branch':
                 return <Branch />
             case 'Department':
-                return <Department />
+                return <DepartmentView />
             default:
                 return (
                     <>
